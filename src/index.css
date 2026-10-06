@@ -150,3 +150,10 @@ body {
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: rgba(255,240,248,0.5); }
 ::-webkit-scrollbar-thumb { background: rgba(232,126,161,0.4); border-radius: 3px; }
+
+/* ─── Force Landscape on Mobile ────────────────────────────────────────────────── */
+@media screen and (orientation: portrait) and (max-width: 900px) {
+  #landscape-overlay {
+    display: flex !important;
+  }
+}

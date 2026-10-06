@@ -283,6 +283,16 @@ function StartScreen({ onStart, audioManager }) {
   )
 }
 
+function LandscapeOverlay() {
+  return (
+    <div id="landscape-overlay" className="fixed inset-0 z-[100] bg-pink-100/95 backdrop-blur-md flex-col items-center justify-center text-center p-8 hidden">
+      <div className="text-6xl mb-6 animate-bounce">📱🔄</div>
+      <h2 className="font-cinzel text-3xl font-black text-pink-600 mb-4">Please Rotate Your Device</h2>
+      <p className="font-inter text-lg text-pink-800/80">This game show is best experienced in landscape mode.</p>
+    </div>
+  )
+}
+
 // ─── Main App ─────────────────────────────────────────────────────────────────
 export default function App() {
   const [isGameStarted, setIsGameStarted] = useState(false)
@@ -664,17 +674,24 @@ export default function App() {
   }
 
   if (!isGameStarted) {
-    return <StartScreen onStart={() => setIsGameStarted(true)} audioManager={audioManager} />
+    return (
+      <>
+        <LandscapeOverlay />
+        <StartScreen onStart={() => setIsGameStarted(true)} audioManager={audioManager} />
+      </>
+    )
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col pt-6 pb-20 px-6">
-      <SakuraPetals />
+    <>
+      <LandscapeOverlay />
+      <div className="relative min-h-screen flex flex-col pt-6 pb-20 px-6 lg:px-12 xl:px-20">
+        <SakuraPetals />
 
       {/* Floating Banner */}
       {bannerMessage && (
-        <div className="floating-banner fixed left-1/2 top-10 z-50 glass-panel px-12 py-5 rounded-full border border-pink-300">
-          <p className="font-cinzel text-2xl font-black tracking-widest text-warm">{bannerMessage}</p>
+        <div className="floating-banner fixed left-1/2 top-10 z-50 glass-panel px-6 py-3 md:px-12 md:py-5 rounded-full border border-pink-300">
+          <p className="font-cinzel text-xl md:text-2xl font-black tracking-widest text-warm">{bannerMessage}</p>
         </div>
       )}
 
@@ -751,10 +768,10 @@ export default function App() {
           </div>
         </div>
       ) : (
-        <main className="relative z-10 max-w-6xl w-full mx-auto flex gap-8">
+        <main className="relative z-10 max-w-6xl w-full mx-auto flex flex-col md:flex-row gap-6 md:gap-8">
           
           {/* Clues Area */}
-          <section className="flex-1 flex flex-col gap-6">
+          <section className="flex-1 flex flex-col gap-4 md:gap-6">
             <div 
               ref={el => el && !seqRefs.current.includes(el) && seqRefs.current.push(el)} 
               className="seq-enter glass-panel p-6 rounded-3xl border border-pink-100 min-h-[160px] flex flex-col justify-between"
@@ -864,7 +881,7 @@ export default function App() {
           </section>
 
           {/* Artwork Panel */}
-          <section className="w-80 shrink-0">
+          <section className="w-full md:w-80 shrink-0">
             <div 
               ref={el => el && !seqRefs.current.includes(el) && seqRefs.current.push(el)} 
               className="seq-enter glass-panel w-full aspect-square rounded-3xl p-3 border border-pink-100 shadow-lg relative overflow-hidden"
@@ -931,6 +948,6 @@ export default function App() {
           </button>
         </div>
       )}
-    </div>
+    </>
   )
 }
