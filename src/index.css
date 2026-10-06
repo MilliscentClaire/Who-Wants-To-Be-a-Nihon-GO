@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* ─── Custom Utilities ──────────────────────────────────────────────────────── */
+@layer utilities {
+  .font-cinzel      { font-family: 'Cinzel', serif; }
+  .font-kawaii      { font-family: 'Darumadrop One', cursive; }
+  .text-warm        { color: #3d2323; }
+  .text-muted       { color: #7c6060; }
+}
+
+/* ─── 3D Kawaii Anime Text ──────────────────────────────────────────────────── */
+.kawaii-3d-text {
+  color: #fff;
+  /* Thick white outline + hot pink outer + deep shadow */
+  -webkit-text-stroke: 1.5px #fff;
+  text-shadow: 
+    3px 3px 0 #ff69b4,
+    -1px -1px 0 #ff69b4,
+    3px -1px 0 #ff69b4,
+    -1px 3px 0 #ff69b4,
+    6px 6px 0 #c71585,
+    9px 9px 12px rgba(199, 21, 133, 0.4);
+}
+
+/* ─── Custom Components ─────────────────────────────────────────────────────── */
+@layer components {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 24px rgba(232, 126, 161, 0.08), 0 1px 4px rgba(0,0,0,0.04);
+  }
+}
+
+/* ─── Body / Background ─────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: linear-gradient(145deg, #fff0f7 0%, #fffcf0 40%, #fff3f8 70%, #fdf8f0 100%);
+}
+
+/* ─── Sakura Petals ─────────────────────────────────────────────────────────── */
+.sakura-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  top: -30px;
+  border-radius: 150% 0 150% 0;
+  opacity: 0;
+  background: radial-gradient(ellipse at 40% 35%, #fff0f5 0%, #ffc8db 55%, #ffaac7 100%);
+  filter: drop-shadow(0 1px 2px rgba(255, 120, 160, 0.18));
+  animation: sakura-fall linear infinite;
+}
+
+@keyframes sakura-fall {
+  0%   { transform: translateY(-30px)   rotate(0deg)   translateX(0px);  opacity: 0; }
+  6%   { opacity: 0.75; }
+  88%  { opacity: 0.55; }
+  100% { transform: translateY(110vh)   rotate(580deg) translateX(55px);  opacity: 0; }
+}
+
+/* ─── Active Team Glow (pulsing gold/pink aura) ─────────────────────────────── */
+@keyframes active-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(201,162,39,0.45), 0 0 18px rgba(201,162,39,0.18),
+                0 0 36px rgba(232,126,161,0.10);
+    border-color: rgba(201,162,39,0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(201,162,39,0.70), 0 0 32px rgba(201,162,39,0.28),
+                0 0 56px rgba(232,126,161,0.16);
+    border-color: rgba(201,162,39,0.80);
+  }
+}
+
+.active-glow {
+  animation: active-pulse 2.2s ease-in-out infinite;
+}
+
+/* ─── Answer Button Flash States ────────────────────────────────────────────── */
+@keyframes flash-yellow {
+  0%, 100% { background-color: #fef9c3; border-color: #eab308; }
+  50%       { background-color: #fde047; border-color: #ca8a04; box-shadow: 0 0 14px rgba(234,179,8,0.45); }
+}
+@keyframes flash-green {
+  0%, 100% { background-color: #dcfce7; border-color: #22c55e; }
+  50%       { background-color: #86efac; border-color: #16a34a; box-shadow: 0 0 18px rgba(34,197,94,0.45); }
+}
+@keyframes flash-red {
+  0%, 100% { background-color: #fee2e2; border-color: #ef4444; }
+  50%       { background-color: #fca5a5; border-color: #dc2626; box-shadow: 0 0 18px rgba(239,68,68,0.40); }
+}
+
+.btn-flash-yellow { animation: flash-yellow 0.65s ease-in-out infinite; }
+.btn-flash-green  { animation: flash-green  0.70s ease-in-out infinite; }
+.btn-flash-red    { animation: flash-red    0.65s ease-in-out 3 forwards; }
+.timer-flash-red  { animation: flash-red    0.65s ease-in-out infinite; } 
+
+/* ─── Floating Banner (Steal / No Steal) ────────────────────────────────────── */
+@keyframes banner-slide {
+  0%   { transform: translateX(-50%) translateY(-72px); opacity: 0; }
+  14%  { transform: translateX(-50%) translateY(0);      opacity: 1; }
+  82%  { transform: translateX(-50%) translateY(0);      opacity: 1; }
+  100% { transform: translateX(-50%) translateY(-72px); opacity: 0; }
+}
+.floating-banner {
+  animation: banner-slide 3.6s ease-in-out forwards;
+}
+
+/* ─── Artwork Image ─────────────────────────────────────────────────────────── */
+.artwork-hidden  { filter: blur(20px) brightness(0.75) saturate(0.5); transform: scale(1.1); transition: all 1.1s ease; }
+.artwork-visible { filter: blur(0)    brightness(1)    saturate(1);   transform: scale(1);   transition: all 1.1s ease; }
+
+/* ─── Enter Animations ──────────────────────────────────────────────────────── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px) scale(0.93); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+.gameover-enter { animation: fade-in-up 0.65s ease forwards; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.modal-enter { animation: fade-in 0.3s ease forwards; }
+
+/* ─── Sequence Entrance ─────────────────────────────────────────────────────── */
+.seq-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ─── Round Progress Dots ───────────────────────────────────────────────────── */
+.rd { width:11px; height:11px; border-radius:50%; transition: all 0.4s ease;
+      background: rgba(0,0,0,0.10); border: 1.5px solid rgba(0,0,0,0.14); }
+.rd.done   { background: #e87ea1; box-shadow: 0 0 7px rgba(232,126,161,0.5); border-color: #e87ea1; }
+.rd.active { background: #c9a227; box-shadow: 0 0 9px rgba(201,162,39,0.6); border-color: #c9a227; }
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: rgba(255,240,248,0.5); }
+::-webkit-scrollbar-thumb { background: rgba(232,126,161,0.4); border-radius: 3px; }
